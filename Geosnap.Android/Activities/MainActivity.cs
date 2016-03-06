@@ -31,9 +31,11 @@ namespace Geosnap.Android.Activities
             SetContentView(Resource.Layout.Main);
 
             var mapViewFragment = new MapViewFragment();
-            var fragmentManager = FragmentManager.BeginTransaction();
-            fragmentManager.Add(Resource.Id.fragment_container, mapViewFragment);
-            fragmentManager.Commit();
+            var tx = FragmentManager.BeginTransaction();
+            tx.Add(Resource.Id.fragment_container, mapViewFragment);
+            tx.Commit();
         }
+
+        public void transit() { }
     }
 }

@@ -54,13 +54,7 @@ namespace Geosnap.Android.Fragments
             {
                 GeosnapApplication.Authorization = response.Authorization;
                 InitSocket(response.Authorization);
-
-                var bundle = new Bundle();
-                bundle.PutString("authorization", response.Authorization);
-                bundle.PutInt("userId", response.Id);
-                var intent = new Intent(View.Context, typeof(MainActivity));
-
-                StartActivity(intent, bundle);
+                ((AuthActivity)Activity).SendToMainActivity(response.Authorization, response.Id);
 
             }, error => Activity.RunOnUiThread(() => Toast.MakeText(View.Context, Resource.String.Error_Login, ToastLength.Long).Show()));
         }

@@ -31,9 +31,18 @@ namespace Geosnap.Android.Activities
             SetContentView(Resource.Layout.Auth);
 
             var mapViewFragment = new LoginFragment(_client);
-            var fragmentManager = FragmentManager.BeginTransaction();
-            fragmentManager.Add(Resource.Id.fragment_container, mapViewFragment);
-            fragmentManager.Commit();
+            var tx = FragmentManager.BeginTransaction();
+            tx.Add(Resource.Id.fragment_container, mapViewFragment);
+            tx.Commit();
+        }
+
+        public void SendToMainActivity(string authorization, int userId)
+        {
+            var bundle = new Bundle();
+            bundle.PutString("authorization", authorization);
+            bundle.PutInt("userId", userId);
+
+            StartActivity(new Intent(this, typeof(MainActivity)), bundle);
         }
     }
 }

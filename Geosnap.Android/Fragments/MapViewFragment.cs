@@ -11,6 +11,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Android.Gms.Maps;
+using Geosnap.Android.Activities;
 
 namespace Geosnap.Android.Fragments
 {
@@ -33,7 +34,7 @@ namespace Geosnap.Android.Fragments
 
         public void OnMapReady(GoogleMap googleMap)
         {
-            ;
+
         }
     }
 }
