@@ -239,3 +239,5 @@ _Pvt_Extensions
 Components
 packages
 Resource.designer.cs
+
+Geosnap.Android/Properties/AssemblyInfo.cs

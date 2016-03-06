@@ -73,9 +73,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeosnapApplication.cs" />
-    <Compile Include="LoginActivity.cs" />
-    <Compile Include="MapActivity.cs" />
+    <Compile Include="Activities\AuthActivity.cs" />
+    <Compile Include="AppStart\GeosnapApplication.cs" />
+    <Compile Include="AppStart\GeosnapCompositionRoot.cs" />
+    <Compile Include="Activities\MainActivity.cs" />
+    <Compile Include="Fragments\LoginFragment.cs" />
+    <Compile Include="Fragments\MapViewFragment.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,7 +88,13 @@
     <AndroidResource Include="Resources\layout\Login.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Map.axml">
+    <AndroidResource Include="Resources\layout\MapView.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Main.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Auth.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
