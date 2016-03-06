@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <string name="Error.Login">Error logging in</string>
+  <string name="Error.Socket">Error connecting to websocket server</string>
+  <string name="Error.CreateAccount">Error creating account, \'{0}\'</string>
+  <!--<string name="Error."></string>-->
+
+  <string name="ErrorCode.UsernameAlreadyExists">Username is already in use</string>
+  <string name="ErrorCode.EmailAlreadyExists">Email is already in use</string>
+  <string name="ErrorCode.UUIDAlreadyExists">Device is linked to another account</string>
+  <!--<string name="ErrorCode."></string>-->
+</resources>

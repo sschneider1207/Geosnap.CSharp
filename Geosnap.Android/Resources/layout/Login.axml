@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_textfield"
+        android:singleLine="true"
+        android:hint="@string/Login.UsernameText"
+        android:imeOptions="actionNext"
+        android:nextFocusForward="@+id/password_textfield" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password_textfield"
+        android:singleLine="true"
+        android:hint="@string/Login.PasswordText"
+        android:imeOptions="actionDone"
+        android:nextFocusForward="@+id/login_button" />
+    <Button
+        android:text="@string/Login.LoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_button" />
+    <Button
+        android:text="@string/Login.RegisterButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_button" />
+    <Button
+        android:text="@string/Login.ResetButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reset_button" />
+</LinearLayout>

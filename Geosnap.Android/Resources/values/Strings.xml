@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="ApplicationName">Geosnap</string>
+  <string name="Login.UsernameText">Username</string>
+  <string name="Login.PasswordText">Password</string>
+  <string name="Login.LoginButton">Login</string>
+  <string name="Login.RegisterButton">Register</string>
+  <string name="Login.ResetButton">Reset Password</string>
+</resources>
