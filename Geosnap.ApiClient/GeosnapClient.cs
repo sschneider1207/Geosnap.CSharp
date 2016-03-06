@@ -40,16 +40,45 @@ namespace Geosnap.ApiClient
                 var json = JsonConvert.SerializeObject(request, SerializerSettings.Value);
                 var requestContent = new StringContent(json, Encoding, JsonMediaType);
                 HttpResponseMessage response;
-                try {
-                    response = await client.PostAsync(endpoint, requestContent);
-                } catch (Exception e)
+                try
                 {
-                    return Result<LoginResponse>.Of(() => { throw e; });
+                    response = await client.PostAsync(endpoint, requestContent);
+                }
+                catch (Exception e)
+                {
+                    return Result<LoginResponse>.Error(e);
                 }
                 var responseJson = await response.Content.ReadAsStringAsync();
                 return Result<LoginResponse>.Of(() => TryGetResult<LoginResponse>(response.IsSuccessStatusCode, responseJson));
             }
         }
+
+        public async Task<Result<Nothing>> Register(string username, string password, string email, Guid uuid)
+        {
+            const string endpoint = "api/users";
+            using (var client = GetClient())
+            {
+                var request = new RegisterRequest(username, password, email, uuid);
+                var json = JsonConvert.SerializeObject(request, SerializerSettings.Value);
+                var requestContent = new StringContent(json, Encoding, JsonMediaType);
+                HttpResponseMessage response;
+                try
+                {
+                    response = await client.PostAsync(endpoint, requestContent);
+                }
+                catch (Exception e)
+                {
+                    return Result<Nothing>.Error(e);
+                }
+
+                if (response.IsSuccessStatusCode) { return Result<Nothing>.Of(new Nothing()); }
+
+                var responseJson = await response.Content.ReadAsStringAsync();
+                var error = JsonConvert.DeserializeObject<ErrorResponse>(json);
+                return Result<Nothing>.Error(new GeosnapException(error.Error));
+            }
+        }
+
 
         public async Task<Result<UploadResponse>> UploadPicture(string authorization, string path, string title)
         {

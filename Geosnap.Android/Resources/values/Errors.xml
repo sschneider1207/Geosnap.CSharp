@@ -3,6 +3,7 @@
   <string name="Error.Login">Error logging in</string>
   <string name="Error.Socket">Error connecting to websocket server</string>
   <string name="Error.CreateAccount">Error creating account, \'{0}\'</string>
+  <string name="Error.Uuid">Error generating device uuid</string>
   <!--<string name="Error."></string>-->
 
   <string name="ErrorCode.UsernameAlreadyExists">Username is already in use</string>

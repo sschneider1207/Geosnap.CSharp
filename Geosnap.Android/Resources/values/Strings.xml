@@ -6,4 +6,9 @@
   <string name="Login.LoginButton">Login</string>
   <string name="Login.RegisterButton">Register</string>
   <string name="Login.ResetButton">Reset Password</string>
+  <string name="Register.UsernameText">Username</string>
+  <string name="Register.PasswordText">Password</string>
+  <string name="Register.EmailText">Email</string>
+  <string name="Register.CreateButton">Create</string>
+  <string name="Register.SuccessToast">User created successfully</string>
 </resources>

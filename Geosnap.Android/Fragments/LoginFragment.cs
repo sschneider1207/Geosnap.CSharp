@@ -61,7 +61,7 @@ namespace Geosnap.Android.Fragments
 
         void HandleRegister(object sender, EventArgs e)
         {
-            ;
+            ((AuthActivity)Activity).SwapToRegisterFragment();
         }
 
         void HandleReset(object sender, EventArgs e)
@@ -84,9 +84,9 @@ namespace Geosnap.Android.Fragments
             var socketOptions = new SocketOptions
             {
                 Params = new JObject { { "jwt", authorization } },
-                LogCallback = (kind, message, data) => Log.Info(Resources.GetString(Resource.String.Geosnap_Log_Tag), $"{kind} - {message}")
+                LogCallback = (kind, message, data) => Log.Info(GetString(Resource.String.Geosnap_Log_Tag), $"{kind} - {message}")
             };
-            var socket = new Socket(Resources.GetString(Resource.String.Geosnap_Api_SocketEndpoint), socketOptions);
+            var socket = new Socket(GetString(Resource.String.Geosnap_Api_SocketEndpoint), socketOptions);
             socket.Connect();
             GeosnapApplication.Socket = socket;
         }
