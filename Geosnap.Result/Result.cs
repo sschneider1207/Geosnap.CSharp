@@ -7,7 +7,6 @@ namespace Geosnap.Result
     /// Modeled after https://github.com/kittinunf/Result
     /// </summary>
     public abstract class Result<TValue>
-        where TValue : class
     {
         protected TValue V { get; }
         protected Exception E { get; }
@@ -15,12 +14,12 @@ namespace Geosnap.Result
         protected Result(TValue value)
         {
             V = value;
-            E = null;
+            E = default(Exception);
         }
 
         protected Result(Exception error)
         {
-            V = null;
+            V = default(TValue);
             E = error;
         }
 
@@ -48,13 +47,13 @@ namespace Geosnap.Result
 
         public abstract TValue GetOrElse(TValue fallback);
 
-        public abstract Result<TReturn> Map<TReturn>(Func<TValue, TReturn> fun) where TReturn : class;
+        public abstract Result<TReturn> Map<TReturn>(Func<TValue, TReturn> fun);
 
-        public abstract Task<Result<TReturn>> MapAsync<TReturn>(Func<TValue, Task<TReturn>> fun) where TReturn : class;
+        public abstract Task<Result<TReturn>> MapAsync<TReturn>(Func<TValue, Task<TReturn>> fun);
 
-        public abstract Result<TReturn> FlatMap<TReturn>(Func<TValue, Result<TReturn>> fun) where TReturn : class;
+        public abstract Result<TReturn> FlatMap<TReturn>(Func<TValue, Result<TReturn>> fun);
 
-        public abstract Task<Result<TReturn>> FlatMapAsync<TReturn>(Func<TValue, Task<Result<TReturn>>> fun) where TReturn : class;
+        public abstract Task<Result<TReturn>> FlatMapAsync<TReturn>(Func<TValue, Task<Result<TReturn>>> fun);
 
         public abstract Result<TValue> MapError(Func<Exception, Exception> fun);
 
@@ -97,11 +96,7 @@ namespace Geosnap.Result
                 return new Failure(e);
             }
         }
-
-        public static explicit operator TValue(Result<TValue> result) => result.Component1();
-
-        public static explicit operator Exception(Result<TValue> result) => result.Component2();
-
+        
         public static explicit operator Tuple<TValue, Exception>(Result<TValue> result) => new Tuple<TValue, Exception>(result.Component1(), result.Component2());
 
         public class Success : Result<TValue>
@@ -110,7 +105,7 @@ namespace Geosnap.Result
 
             protected override TValue Component1() => V;
 
-            protected override Exception Component2() => null;
+            protected override Exception Component2() => default(Exception);
 
             public override void Fold(Action<TValue> successAction, Action<Exception> failureAction) => successAction(V);
 
@@ -130,7 +125,7 @@ namespace Geosnap.Result
                 }
 
                 var s = obj as Success;
-                return s != null && s.V == V;
+                return s != null && s.V.Equals(V);
             }
 
             public override TReturn GetAs<TReturn>() => (TReturn)(object)V;
@@ -170,7 +165,7 @@ namespace Geosnap.Result
         {
             internal Failure(Exception error) : base(error) { }
 
-            protected override TValue Component1() => null;
+            protected override TValue Component1() => default(TValue);
 
             protected override Exception Component2() => E;
 
@@ -192,7 +187,7 @@ namespace Geosnap.Result
                 }
 
                 var f = obj as Failure;
-                return f != null && f.E == E;
+                return f != null && f.E.Equals(E);
             }
 
             public override TReturn GetAs<TReturn>() => (TReturn)(object)E;
