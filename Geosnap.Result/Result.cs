@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Geosnap.Result
 {
@@ -37,7 +38,11 @@ namespace Geosnap.Result
 
         public abstract void OnSuccess(Action<TValue> action);
 
+        public abstract Task OnSuccessAsync(Func<TValue, Task> action);
+
         public abstract void OnFailure(Action<Exception> action);
+
+        public abstract Task OnFailureAsync(Func<Exception, Task> action);
 
         public abstract Result<TValue> Or(TValue fallback);
 
@@ -45,11 +50,19 @@ namespace Geosnap.Result
 
         public abstract Result<TReturn> Map<TReturn>(Func<TValue, TReturn> fun) where TReturn : class;
 
+        public abstract Task<Result<TReturn>> MapAsync<TReturn>(Func<TValue, Task<TReturn>> fun) where TReturn : class;
+
         public abstract Result<TReturn> FlatMap<TReturn>(Func<TValue, Result<TReturn>> fun) where TReturn : class;
+
+        public abstract Task<Result<TReturn>> FlatMapAsync<TReturn>(Func<TValue, Task<Result<TReturn>>> fun) where TReturn : class;
 
         public abstract Result<TValue> MapError(Func<Exception, Exception> fun);
 
+        public abstract Task<Result<TValue>> MapErrorAsync(Func<Exception, Task<Exception>> fun);
+
         public abstract Result<TValue> FlatMapError(Func<Exception, Result<TValue>> fun);
+
+        public abstract Task<Result<TValue>> FlatMapErrorAsync(Func<Exception, Task<Result<TValue>>> fun);
 
         public abstract bool Any(Func<TValue, bool> fun);
 
@@ -64,6 +77,19 @@ namespace Geosnap.Result
             try
             {
                 var value = fun();
+                return new Success(value);
+            }
+            catch (Exception e)
+            {
+                return new Failure(e);
+            }
+        }
+
+        public static async Task<Result<TValue>> OfAsync(Func<Task<TValue>> fun)
+        {
+            try
+            {
+                var value = await fun();
                 return new Success(value);
             }
             catch (Exception e)
@@ -111,7 +137,11 @@ namespace Geosnap.Result
 
             public override void OnSuccess(Action<TValue> action) => action(V);
 
+            public override Task OnSuccessAsync(Func<TValue, Task> action) => action(V);
+
             public override void OnFailure(Action<Exception> action) { }
+
+            public override Task OnFailureAsync(Func<Exception, Task> action) => Task.FromResult<object>(null);
 
             public override Result<TValue> Or(TValue fallback) => new Success(V);
 
@@ -119,11 +149,19 @@ namespace Geosnap.Result
 
             public override Result<TReturn> Map<TReturn>(Func<TValue, TReturn> fun) => new Result<TReturn>.Success(fun(V));
 
+            public override async Task<Result<TReturn>> MapAsync<TReturn>(Func<TValue, Task<TReturn>> fun) => new Result<TReturn>.Success(await fun(V));
+
             public override Result<TReturn> FlatMap<TReturn>(Func<TValue, Result<TReturn>> fun) => fun(V);
+
+            public override Task<Result<TReturn>> FlatMapAsync<TReturn>(Func<TValue, Task<Result<TReturn>>> fun) => fun(V);
 
             public override Result<TValue> MapError(Func<Exception, Exception> fun) => new Success(V);
 
+            public override Task<Result<TValue>> MapErrorAsync(Func<Exception, Task<Exception>> fun) => Task.FromResult<Result<TValue>>(new Success(V));
+
             public override Result<TValue> FlatMapError(Func<Exception, Result<TValue>> fun) => new Success(V);
+
+            public override Task<Result<TValue>> FlatMapErrorAsync(Func<Exception, Task<Result<TValue>>> fun) => Task.FromResult<Result<TValue>>(new Success(V));
 
             public override bool Any(Func<TValue, bool> fun) => fun(V);
         }
@@ -161,7 +199,11 @@ namespace Geosnap.Result
 
             public override void OnSuccess(Action<TValue> action) { }
 
+            public override Task OnSuccessAsync(Func<TValue, Task> action) => Task.FromResult<object>(null);
+
             public override void OnFailure(Action<Exception> action) => action(E);
+
+            public override Task OnFailureAsync(Func<Exception, Task> action) => action(E);
 
             public override Result<TValue> Or(TValue fallback) => new Success(fallback);
 
@@ -169,11 +211,19 @@ namespace Geosnap.Result
 
             public override Result<TReturn> Map<TReturn>(Func<TValue, TReturn> fun) => new Result<TReturn>.Failure(E);
 
+            public override Task<Result<TReturn>> MapAsync<TReturn>(Func<TValue, Task<TReturn>> fun) => Task.FromResult<Result<TReturn>>(new Result<TReturn>.Failure(E));
+
             public override Result<TReturn> FlatMap<TReturn>(Func<TValue, Result<TReturn>> fun) => new Result<TReturn>.Failure(E);
+
+            public override Task<Result<TReturn>> FlatMapAsync<TReturn>(Func<TValue, Task<Result<TReturn>>> fun) => Task.FromResult<Result<TReturn>>(new Result<TReturn>.Failure(E));
 
             public override Result<TValue> MapError(Func<Exception, Exception> fun) => new Failure(fun(E));
 
+            public override async Task<Result<TValue>> MapErrorAsync(Func<Exception, Task<Exception>> fun) => new Failure(await fun(E));
+
             public override Result<TValue> FlatMapError(Func<Exception, Result<TValue>> fun) => fun(E);
+
+            public override Task<Result<TValue>> FlatMapErrorAsync(Func<Exception, Task<Result<TValue>>> fun) => fun(E);
 
             public override bool Any(Func<TValue, bool> fun) => false;
         }
