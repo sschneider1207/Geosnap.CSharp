@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <string name="Geosnap.Api.Endpoint">http://192.168.1.67:4000</string>
-  <string name="Geosnap.Api.SocketEndpoint">ws://192.168.1.67:4000/socket</string>
+  <string name="Geosnap.Api.Endpoint">http://192.168.0.11:4000</string>
+  <string name="Geosnap.Api.SocketEndpoint">ws://192.168.0.11:4000/socket</string>
   <string name="Geosnap.Api.Key">6a33fe2ct6ehsqco6qnak8cuutld5sbcg78teobagpuo28i2d7rsgq84i1n4kh689qut0arf3uq3ia4ltd7acasi27nkf5qbnohiaeg=</string>
   <string name="Geosnap.Log.Tag">geosnap</string>
 </resources>

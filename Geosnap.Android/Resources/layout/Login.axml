@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    tools:gridSpec="1|8|#0093eeff|K:#ee8700ff:16,l:72,l:16,r|S:#83ee00ff:16,0,l:16,56,l:16,0,r">
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,15 +14,28 @@
         android:hint="@string/Login.UsernameText"
         android:imeOptions="actionNext"
         android:nextFocusForward="@+id/password_textfield" />
-    <EditText
-        android:inputType="textPassword"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password_textfield"
-        android:singleLine="true"
-        android:hint="@string/Login.PasswordText"
-        android:imeOptions="actionDone"
-        android:nextFocusForward="@+id/login_button" />
+        android:weightSum="1.0">
+        <EditText
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password_textfield"
+            android:singleLine="true"
+            android:hint="@string/Login.PasswordText"
+            android:imeOptions="actionDone"
+            android:nextFocusForward="@+id/login_button"
+            android:layout_weight=".30" />
+        <CheckBox
+            android:text="@string/Login.RemeberCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/remember_checkbox"
+            android:layout_weight=".70" />
+    </LinearLayout>
     <Button
         android:text="@string/Login.LoginButton"
         android:layout_width="match_parent"

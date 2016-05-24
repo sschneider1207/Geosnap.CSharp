@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
+using LightInject;
+using Android;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -28,3 +29,15 @@ using Android.App;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+
+[assembly: MetaData("com.google.android.maps.v2.API_KEY", Value = "AIzaSyCUGYbtrXF80rOaRxKDNvuOaMwxtZZT5OM")]
+[assembly: CompositionRootType(typeof(Geosnap.Android.LightInject.GeosnapCompositionRoot))]
+
+// Permissions
+[assembly: UsesPermission(Manifest.Permission.Internet)]
+[assembly: UsesPermission(Manifest.Permission.AccessNetworkState)]
+[assembly: UsesPermission(Manifest.Permission.AccessCoarseLocation)]
+[assembly: UsesPermission(Manifest.Permission.AccessFineLocation)]
+[assembly: UsesPermission(Manifest.Permission.AccessMockLocation)]
+[assembly: UsesPermission(Manifest.Permission.WriteExternalStorage)]

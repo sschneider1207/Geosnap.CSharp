@@ -44,32 +44,33 @@ namespace Geosnap.Android.Fragments
             return view;
         }
 
-        async void HandleLogin(object sender, EventArgs e)
+        private async void HandleLogin(object sender, EventArgs e)
         {
             var username = View.FindViewById<EditText>(Resource.Id.username_textfield).Text;
             var password = View.FindViewById<EditText>(Resource.Id.password_textfield).Text;
+            var remember = View.FindViewById<CheckBox>(Resource.Id.remember_checkbox).Checked;
 
             var result = await _client.Login(username, password);
             result.Fold(response =>
             {
                 GeosnapApplication.Authorization = response.Authorization;
                 InitSocket(response.Authorization);
-                ((AuthActivity)Activity).SendToMainActivity(response.Authorization, response.Id);
+                ((AuthActivity)Activity).SendToMainActivity(response.Authorization, response.Id, remember);
 
             }, error => Activity.RunOnUiThread(() => Toast.MakeText(View.Context, Resource.String.Error_Login, ToastLength.Long).Show()));
         }
 
-        void HandleRegister(object sender, EventArgs e)
+        private void HandleRegister(object sender, EventArgs e)
         {
             ((AuthActivity)Activity).SwapToRegisterFragment();
         }
 
-        void HandleReset(object sender, EventArgs e)
+        private void HandleReset(object sender, EventArgs e)
         {
             ;
         }
 
-        void HandleEditorAction(object sender, TextView.EditorActionEventArgs e)
+        private void HandleEditorAction(object sender, TextView.EditorActionEventArgs e)
         {
             e.Handled = false;
             if (e.ActionId == ImeAction.Done)
@@ -79,7 +80,7 @@ namespace Geosnap.Android.Fragments
             }
         }
 
-        public void InitSocket(string authorization)
+        private void InitSocket(string authorization)
         {
             var socketOptions = new SocketOptions
             {

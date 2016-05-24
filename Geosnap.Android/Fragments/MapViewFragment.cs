@@ -12,11 +12,21 @@ using Android.Views;
 using Android.Widget;
 using Android.Gms.Maps;
 using Geosnap.Android.Activities;
+using Android.Locations;
+using Android.Gms.Maps.Model;
 
 namespace Geosnap.Android.Fragments
 {
     public class MapViewFragment : Fragment, IOnMapReadyCallback
     {
+        private readonly Location _location;
+        private GoogleMap _googleMap;
+
+        public MapViewFragment(Location location)
+        {
+            _location = location;
+        }
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -34,7 +44,15 @@ namespace Geosnap.Android.Fragments
 
         public void OnMapReady(GoogleMap googleMap)
         {
+            _googleMap = googleMap;
 
+            var builder = CameraPosition.InvokeBuilder();
+            builder.Target(new LatLng(_location.Latitude, _location.Longitude));
+            builder.Zoom(18);
+            var cameraPosition = builder.Build();
+            var cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
+
+            _googleMap.MoveCamera(cameraUpdate);
         }
     }
 }
